@@ -123,10 +123,10 @@ namespace BetterFollowbot.Skills
                     {
                         // Count current summoned raging spirits
                         var ragingSpiritCount = Summons.GetRagingSpiritCount();
-                        var totalMinionCount = Summons.GetTotalMinionCount();
+                        //var totalMinionCount = Summons.GetTotalMinionCount();
 
                         // Only cast SRS if we have less than the minimum required count
-                        if (totalMinionCount < _settings.summonRagingSpiritsMinCount.Value)
+                        if (ragingSpiritCount < _settings.summonRagingSpiritsMinCount.Value)
                         {
                             // Check for HOSTILE rare/unique enemies within 500 units (exclude player's own minions)
                             bool rareOrUniqueNearby = false;
@@ -160,8 +160,7 @@ namespace BetterFollowbot.Skills
                                 // Find the Summon Raging Spirits skill
                                 var summonRagingSpiritsSkill = _instance.skills.FirstOrDefault(s =>
                                     s.Name.Contains("SummonRagingSpirit") ||
-                                    s.Name.Contains("Summon Raging Spirit") ||
-                                    (s.Name.Contains("summon") && s.Name.Contains("spirit") && s.Name.Contains("rag")));
+                                    s.Name.Contains("Summon Raging Spirit"));
 
                                 if (summonRagingSpiritsSkill != null && summonRagingSpiritsSkill.IsOnSkillBar && summonRagingSpiritsSkill.CanBeUsed)
                                 {
