@@ -19,6 +19,9 @@ namespace BetterFollowbot.Skills
         private readonly Summons _summons;
 
 
+       private DateTime _lastSummonTime = DateTime.MinValue;
+
+
         public SummonSkeletons(BetterFollowbot instance, BetterFollowbotSettings settings,
                               AutoPilot autoPilot, Summons summons)
         {
@@ -92,11 +95,11 @@ namespace BetterFollowbot.Skills
                 return;
 
             // Check individual skill cooldown
-            if (!_instance.CanUseSkill("SummonSkeletons"))
+            if ((DateTime.Now - _lastSummonTime).TotalSeconds < (double)_settings.summonSkeletonsCooldown.Value)
                 return;
-
-            try
-            {
+ 
+             try
+             {
                 if (_settings.summonSkeletonsEnabled.Value && _instance.Gcd())
                 {
                     // Check if we have a party leader to follow
@@ -124,29 +127,31 @@ namespace BetterFollowbot.Skills
                             // Only summon if within range
                             if (distanceToLeader <= _settings.summonSkeletonsRange.Value)
                             {
-                                // Count current skeletons
-                                var skeletonCount = Summons.GetSkeletonCount();
+                                // Find the summon skeletons skill
+                                var summonSkeletonsSkill = _instance.skills.FirstOrDefault(s =>
+                                    s.InternalName.Contains("summon_skeletons"));
 
-                                // Summon if we have less than the minimum required
-                                if (skeletonCount < _settings.summonSkeletonsMinCount.Value)
+                                if (summonSkeletonsSkill != null)
                                 {
-                                    // Find the summon skeletons skill
-                                    var summonSkeletonsSkill = _instance.skills.FirstOrDefault(s =>
-                                        s.Name.Contains("Summon Skeletons") ||
-                                        s.Name.Contains("summon") && s.Name.Contains("skeleton"));
+                                    // Count skeletons from the skill's deployed objects
+                                    var skeletonCount = summonSkeletonsSkill.DeployedObjects.Count;
 
-                                    if (summonSkeletonsSkill != null && summonSkeletonsSkill.IsOnSkillBar && summonSkeletonsSkill.CanBeUsed)
+                                    // Summon if we have less than the minimum required
+                                    if (skeletonCount < _settings.summonSkeletonsMinCount.Value)
                                     {
+                                        if (summonSkeletonsSkill.IsOnSkillBar && summonSkeletonsSkill.CanBeUsed)
+                                        {
                                         // Use the summon skeletons skill
                                         var skillKey = _instance.GetSkillInputKey(summonSkeletonsSkill.SkillSlotIndex);
                                         if (skillKey != default(Keys))
                                         {
                                             Keyboard.KeyPress(skillKey);
-                                            _instance.RecordSkillUse("SummonSkeletons");
+                                            _lastSummonTime = DateTime.Now;
                                         }
                                         _instance.LastTimeAny = DateTime.Now; // Update global cooldown
-                                    }
-                                }
+                                       }
+                                   }
+                               }
                             }
                         }
                     }

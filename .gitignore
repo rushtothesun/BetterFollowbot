@@ -9,3 +9,6 @@ riderModule.iml
 *.DotSettings.user
 Errors.txt
 .idea/
+ExileCore.dll
+GameOffsets.dll
+.vscode/

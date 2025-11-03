@@ -383,6 +383,9 @@ internal class ImGuiDrawSettings
                 BetterFollowbot.Instance.Settings.summonSkeletonsMinCount.Value =
                     ImGuiExtension.IntSlider("Min Count", BetterFollowbot.Instance.Settings.summonSkeletonsMinCount);
 
+                BetterFollowbot.Instance.Settings.summonSkeletonsCooldown.Value =
+                    ImGuiExtension.FloatSlider("Cooldown", BetterFollowbot.Instance.Settings.summonSkeletonsCooldown, "%.2f");
+
                 ImGui.Spacing();
                 ImGui.Separator();
                 ImGui.Spacing();
@@ -512,8 +515,8 @@ internal class ImGuiDrawSettings
                 
                 ImGui.Separator();
                 ImGui.Text("Skill Cooldown:");
-                BetterFollowbot.Instance.Settings.skillCooldown.Value = 
-                    ImGuiExtension.FloatSlider("Individual Skill Cooldown (seconds)", BetterFollowbot.Instance.Settings.skillCooldown);
+                BetterFollowbot.Instance.Settings.skillCooldown.Value =
+                    ImGuiExtension.FloatSlider("Individual Skill Cooldown (seconds)", BetterFollowbot.Instance.Settings.skillCooldown, "%.2f");
                 ImGui.Text($"Each skill can be used every {BetterFollowbot.Instance.Settings.skillCooldown.Value:F2}s");
             }
         }

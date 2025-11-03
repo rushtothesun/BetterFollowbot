@@ -126,12 +126,19 @@ public class ImGuiExtension
         return refValue;
     }
 
-    public static float FloatSlider(string labelString, RangeNode<float> setting, float power)
+    public static float FloatSlider(string labelString, RangeNode<float> setting, string format)
     {
         var refValue = setting.Value;
-        ImGui.SliderFloat(labelString, ref refValue, setting.Min, setting.Max, "%.00f");
+        ImGui.SliderFloat(labelString, ref refValue, setting.Min, setting.Max, format);
         return refValue;
     }
+ 
+     public static float FloatSlider(string labelString, RangeNode<float> setting, float power)
+     {
+         var refValue = setting.Value;
+         ImGui.SliderFloat(labelString, ref refValue, setting.Min, setting.Max, "%.00f");
+         return refValue;
+     }
 
     public static float FloatSlider(string labelString, string sliderString, RangeNode<float> setting)
     {

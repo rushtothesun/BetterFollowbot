@@ -100,6 +100,7 @@ public class BetterFollowbotSettings : ISettings
     public ToggleNode summonSkeletonsEnabled = new ToggleNode(false);
     public RangeNode<int> summonSkeletonsRange = new RangeNode<int>(500, 100, 2000);
     public RangeNode<int> summonSkeletonsMinCount = new RangeNode<int>(5, 1, 20);
+    public RangeNode<float> summonSkeletonsCooldown = new RangeNode<float>(0.5f, 0, 1);
 
     // SRS (Summon Raging Spirits) settings
     public ToggleNode summonRagingSpiritsEnabled = new ToggleNode(false);
@@ -139,7 +140,7 @@ public class BetterFollowbotSettings : ISettings
     #region General Settings
 
     public ToggleNode disableSkillsInHideout = new ToggleNode(true);
-    public RangeNode<float> skillCooldown = new RangeNode<float>(0.2f, 0.05f, 1.0f);
+    public RangeNode<float> skillCooldown = new RangeNode<float>(0.2f, 0.0f, 1.0f);
 
     #endregion
 

@@ -159,8 +159,7 @@ namespace BetterFollowbot.Skills
                             {
                                 // Find the Summon Raging Spirits skill
                                 var summonRagingSpiritsSkill = _instance.skills.FirstOrDefault(s =>
-                                    s.Name.Contains("SummonRagingSpirit") ||
-                                    s.Name.Contains("Summon Raging Spirit"));
+                                    s.InternalName.Contains("summon_raging_spirit"));
 
                                 if (summonRagingSpiritsSkill != null && summonRagingSpiritsSkill.IsOnSkillBar && summonRagingSpiritsSkill.CanBeUsed)
                                 {
